@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+
+import { OptionsForm } from '@auth/form/form.component';
+import { ACTIONS } from '@shared/constants/constants';
 
 @Component({
   selector: 'app-sign-in',
-  templateUrl: './sign-in.component.html',
+  template: `<app-form [options]="options"></app-form>`,
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+export class SignInComponent {
+  options: OptionsForm = {
+    id: ACTIONS.signIn,
+    label: ACTIONS.signIn
   }
-
 }

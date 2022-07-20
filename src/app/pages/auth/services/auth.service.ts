@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { environment } from '@env/environment';
+import { USER_STORAGE_KEY } from '@shared/constants/constants';
+import { ApiError, createClient, Session, SupabaseClient, User, UserCredentials } from '@supabase/supabase-js';
+import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+
+type supabaseResponse = User | Session | ApiError | null;
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private supabaseClient!: SupabaseClient;
+  private userSubject = new BehaviorSubject<User | null>(null);
+
+  constructor() {
+    this.supabaseClient = createClient(environment.supabase.url, environment.supabase.publicKey)
+  }
+
+  get user$(): Observable<User | null> {
+    return this.userSubject.asObservable();
+  }
+
+  async signIn(credentials: UserCredentials): Promise<supabaseResponse> {
+    try {
+      const { user, error, ...rest } = await this.supabaseClient.auth.signIn(credentials);
+
+      // TODO: set user
+      return error ? error : user;
+    } catch (error) {
+      console.log(error);
+      return error as ApiError;
+    }
+  }
+
+  private setUser(): void {
+    const session = localStorage.getItem(USER_STORAGE_KEY) as unknown as User;
+    this.userSubject.next(session);
+  }
+}
