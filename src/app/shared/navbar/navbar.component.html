@@ -13,8 +13,15 @@
 <mat-toolbar color="primary" class="app-header">
   <span>Angular Supabase</span>
   <span class="nav-tool-items">
-    <a mat-button [routerLink]="['/sign-in']">Sign In</a>
-    <a mat-button [routerLink]="['/sign-up']">Sign Up</a>
+    <ng-container *ngIf="(user$ | async) === null; else logOutTemplate">
+      <a mat-button [routerLink]="['/sign-in']">Sign In</a>
+      <a mat-button [routerLink]="['/sign-up']">Sign Up</a>
+    </ng-container>
+
+    <ng-template #logOutTemplate>
+      <span class="flexExpand"></span>
+      <a mat-button [routerLink]="['/sign-in']" (click)="onLogout()">Logout</a>
+    </ng-template>
   </span>
 </mat-toolbar>
 

@@ -1,30 +1,46 @@
 <mat-card>
   <mat-card-content>
-    <form [formGroup]="authForm" (ngSubmit)="onSubmit()"  class="box">
+    <form [formGroup]="authForm" (ngSubmit)="onSubmit()" class="box">
       <h3>{{ options.label }}</h3>
       <mat-form-field class="full-width-input">
-        <input matInput placeholder="Email" formControlName="email" required autocomplete="off">
+        <input
+          matInput
+          placeholder="Email"
+          formControlName="email"
+          required
+          autocomplete="off"
+        />
         <mat-error *ngIf="isFieldInvalid('email')">
           Please write your email
         </mat-error>
       </mat-form-field>
       <mat-form-field class="full-width-input">
-        <input matInput type="password" placeholder="Password" formControlName="password" required autocomplete="off">
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          required
+          autocomplete="off"
+        />
         <mat-error *ngIf="isFieldInvalid('password')">
           Please write a valid password
         </mat-error>
       </mat-form-field>
-      <button mat-raised-button color="primary" type="submit">{{ options.label }}</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ options.label }}
+      </button>
 
+      <br />
       <ng-container *ngIf="options.id === signIn; else signUpTemplate">
         <a [routerLink]="['/sign-up']">Create new account</a>
       </ng-container>
-
     </form>
 
     <ng-template #signUpTemplate>
-      <a [routerLink]="['/sign-in']">Already have an account? <small>Sign In here!</small></a>
+      <a [routerLink]="['/sign-in']"
+        >Already have an account? <small>Sign In here!</small></a
+      >
     </ng-template>
-
   </mat-card-content>
 </mat-card>

@@ -1,7 +1,7 @@
 :host {
   display: grid;
   place-items: center;
-  height: 100vh;
-  background: url('https://jdlgroupe.com/wp-content/uploads/2017/07/loxam_nacelle.jpg');
+  height: calc(100vh - 60px);
+  background: url("https://jdlgroupe.com/wp-content/uploads/2017/07/loxam_nacelle.jpg");
   background-size: cover;
 }
