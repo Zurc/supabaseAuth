@@ -10,14 +10,15 @@ const routes: Routes = [
   },
   {
     path: 'sign-in',
-    canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./pages/auth/sign-in/sign-in.module').then((m) => m.SignInModule),
+    import('./pages/auth/sign-in/sign-in.module').then((m) => m.SignInModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'sign-up',
     loadChildren: () =>
-      import('./pages/auth/sign-up/sign-up.module').then((m) => m.SignUpModule),
+    import('./pages/auth/sign-up/sign-up.module').then((m) => m.SignUpModule),
+    canActivate: [AuthGuard],
   },
   { path: '', redirectTo: '/sign-in', pathMatch: 'full' },
   { path: '**', redirectTo: '/sign-in', pathMatch: 'full' },

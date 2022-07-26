@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from '@auth/services/auth.service';
 import { ACTIONS } from '@shared/constants/constants';
@@ -21,13 +22,15 @@ export class FormComponent implements OnInit {
   @Input() options!: OptionsForm;
   authForm!: FormGroup;
   private formSubmitAttempt!: boolean;
+  durationInSeconds = 5;
 
   signIn = ACTIONS.signIn;
 
   constructor(
     private readonly authSvc: AuthService,
     private readonly fb: FormBuilder,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,6 @@ export class FormComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    console.log('Save', this.authForm.value);
     const credentials: UserCredentials = this.authForm.value;
     let actionToCall;
 
@@ -51,7 +53,11 @@ export class FormComponent implements OnInit {
         this.redirectUser();
         console.log('home ->');
       } else {
-        // TODO: show notification
+        this.snackBar.open(result.message, '', {
+          horizontalPosition: 'end',
+          verticalPosition: 'top',
+          duration: this.durationInSeconds * 1000,
+        })
         console.log('notification ->');
       }
     } catch (error) {
