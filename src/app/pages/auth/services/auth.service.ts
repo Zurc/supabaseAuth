@@ -25,6 +25,7 @@ export class AuthService {
       environment.supabase.url,
       environment.supabase.publicKey
     );
+    this.setUser();
   }
 
   get user$(): Observable<User | null> {
